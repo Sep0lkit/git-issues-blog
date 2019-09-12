@@ -10,6 +10,7 @@ LABEL com.github.actions.color="orange"
 
 COPY requirements.txt /tmp/
 RUN pip install --requirement /tmp/requirements.txt
+RUN apt-get install -y git
 
 COPY git-issues-blog.py /git-issues-blog.py
 RUN chmod +x /git-issues-blog.py
