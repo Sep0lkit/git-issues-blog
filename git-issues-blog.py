@@ -110,7 +110,7 @@ for p in POSTS:
 
 commit = os.environ['GITHUB_SHA']
 print("update posts to commit id: %s" % commit)
-if re.search("^\w{7}$", commit):
+if re.search("^\w{40}$", commit):
     dictionary['__commit__'] = commit
 else:
     print('last commit id got error')
