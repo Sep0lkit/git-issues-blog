@@ -118,7 +118,7 @@ else:
 
 #write posts index and commit step
 #update POSTS_INDEX
-post_index_content = json.dump(dictionary)
+post_index_content = json.dumps(dictionary)
 post_index_file = repo.get_contents(POSTS_INDEX,ref=GITHUB_BRANCH)
 post_index_msg = "rebuild posts index from: " + GITHUB_ACTION_NAME
 repo.update_file(post_index_file.path, post_index_msg, post_index_content, post_index_file.sha, branch=GITHUB_BRANCH)
