@@ -37,8 +37,8 @@ if index.exists():
         command = "git diff --name-only " + lastcommit
         changed = subprocess.check_output(command).decode()
         CHANGED = [y for y in (x.strip() for x in changed.splitlines()) if y]
-    except:
-        print('%s load error' % POST_INDEX_FILE)
+    except Exception, e:
+        print('%s load error: %s' % (POST_INDEX_FILE, e))
         exit(-1)
 
 print("changed file: ")
