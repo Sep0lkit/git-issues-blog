@@ -34,7 +34,7 @@ if index.exists():
         with open(POST_INDEX_FILE, encoding='utf-8', mode = 'r') as fp:
             dictionary = json.load(fp)
         lastcommit = dictionary['__commit__']
-        command = "git diff --name-only " + lastcommit
+        command = "/usr/bin/git diff --name-only " + lastcommit
         changed = subprocess.check_output(command).decode()
         CHANGED = [y for y in (x.strip() for x in changed.splitlines()) if y]
     except Exception as e:
