@@ -9,13 +9,12 @@ import subprocess
 from github import Github
 
 GITHUB_API = "https://api.github.com"
+GITHUB_ACTION_NAME = os.environ['GITHUB_ACTION']
 
 # Get environment variables
 GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
 GITHUB_REPO = os.environ['GITHUB_REPOSITORY']
-GITHUB_BRANCH = os.environ['GITHUB_REF']
-GITHUB_ACTION_NAME = os.environ['GITHUB_ACTION']
-
+GITHUB_BRANCH = os.getenv('GITHUB_BRANCH', 'master')
 POSTS_PATH = os.getenv('POSTS_PATH', 'posts')
 POSTS_INDEX = os.getenv('POSTS_INDEX', '_index')
 # Global variables
@@ -109,21 +108,19 @@ for p in POSTS:
         print("issue create successfule: %s" % issue.number)
         dictionary[pstr] = issue.number
 
-    commit = subprocess.check_output("git log --format=%h -n 1").decode().rstrip()
-    print("update posts to commit id: %s" % commit)
-    if re.search("^\w{7}$", commit):
-        dictionary['__commit__'] = commit
-    else:
-        print('last commit id got error')
-        exit(-1)
+commit = os.environ['GITHUB_SHA']
+print("update posts to commit id: %s" % commit)
+if re.search("^\w{7}$", commit):
+    dictionary['__commit__'] = commit
+else:
+    print('last commit id got error')
+    exit(-1)
 
-    #write posts index and commit step
-    with open(POSTS_INDEX, encoding='utf-8', mode = 'w') as fp:
-        json.dump(dictionary, fp)
-
-    #update POSTS_INDEX
-    post_index_file = repo.get_contents(POSTS_INDEX,ref=GITHUB_BRANCH)
-    post_index_msg = "rebuild posts index from: " + GITHUB_ACTION_NAME
-    repo.update_file(post_index_file.path, post_index_msg, post_index_file.sha, branch=GITHUB_BRANCH)
+#write posts index and commit step
+#update POSTS_INDEX
+post_index_content = json.dump(dictionary)
+post_index_file = repo.get_contents(POSTS_INDEX,ref=GITHUB_BRANCH)
+post_index_msg = "rebuild posts index from: " + GITHUB_ACTION_NAME
+repo.update_file(post_index_file.path, post_index_msg, post_index_content, post_index_file.sha, branch=GITHUB_BRANCH)
 
 print("posts update successful")
