@@ -13,7 +13,7 @@ GITHUB_API = "https://api.github.com"
 # Get environment variables
 GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
 GITHUB_REPO = os.environ['GITHUB_REPOSITORY']
-GITHUB_BRANCH = os.environ('GITHUB_REF')
+GITHUB_BRANCH = os.environ['GITHUB_REF']
 GITHUB_ACTION_NAME = os.environ['GITHUB_ACTION']
 
 POSTS_PATH = os.getenv('POSTS_PATH', 'posts')
