@@ -1,3 +1,4 @@
+### Footer:
 
-<center>  Powered By [git-issue-blog](https://github.com/Sep0lkit/git-issues-blog)  </center>
+<center>  Powered By <a href="https://github.com/Sep0lkit/git-issues-blog">git-issues-blog</a></center>
 
