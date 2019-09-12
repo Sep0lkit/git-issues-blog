@@ -7,6 +7,7 @@ import pathlib
 import requests
 import subprocess
 from github import Github
+from github import UnknownObjectException
 
 GITHUB_API = "https://api.github.com"
 GITHUB_ACTION_NAME = os.environ['GITHUB_ACTION']
@@ -16,7 +17,7 @@ GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
 GITHUB_REPO = os.environ['GITHUB_REPOSITORY']
 GITHUB_BRANCH = os.getenv('GITHUB_BRANCH', 'master')
 POSTS_PATH = os.getenv('POSTS_PATH', 'posts')
-POSTS_INDEX = os.getenv('POSTS_INDEX', '_index')
+POST_INDEX_FILE = os.getenv('POST_INDEX_FILE', '_index')
 # Global variables
 POSTS = []
 CHANGED = []
@@ -27,17 +28,17 @@ repo = g.get_repo(GITHUB_REPO)
 
 # local dictionary
 dictionary = {}
-index = pathlib.Path(POSTS_INDEX)
+index = pathlib.Path(POST_INDEX_FILE)
 if index.exists():
     try:
-        with open(POSTS_INDEX, encoding='utf-8', mode = 'r') as fp:
+        with open(POST_INDEX_FILE, encoding='utf-8', mode = 'r') as fp:
             dictionary = json.load(fp)
         lastcommit = dictionary['__commit__']
         command = "git diff --name-only " + lastcommit
         changed = subprocess.check_output(command).decode()
         CHANGED = [y for y in (x.strip() for x in changed.splitlines()) if y]
     except:
-        print('%s load error' % POSTS_INDEX)
+        print('%s load error' % POST_INDEX_FILE)
         exit(-1)
 
 print("changed file: ")
@@ -117,9 +118,13 @@ else:
     exit(-1)
 
 #write posts index and commit step
-#update POSTS_INDEX
+try:
+    repo.get_contents(POST_INDEX_FILE,ref=GITHUB_BRANCH)
+except UnknownObjectException:
+    repo.create_file(POST_INDEX_FILE, "add post index: _index", "{}", branch=GITHUB_BRANCH)
+#update POST_INDEX_FILE
+post_index_file = repo.get_contents(POST_INDEX_FILE,ref=GITHUB_BRANCH)
 post_index_content = json.dumps(dictionary)
-post_index_file = repo.get_contents(POSTS_INDEX,ref=GITHUB_BRANCH)
 post_index_msg = "rebuild posts index from: " + GITHUB_ACTION_NAME
 repo.update_file(post_index_file.path, post_index_msg, post_index_content, post_index_file.sha, branch=GITHUB_BRANCH)
 
