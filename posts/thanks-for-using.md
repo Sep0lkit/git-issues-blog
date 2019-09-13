@@ -10,9 +10,9 @@ Github: https://github.com/Sep0lkit/git-issues-blog
 
 
 
-**Update Issue:**
+### Update this post:
 
-this line added for update testing.
+This line added for update testing.
 
 
 
