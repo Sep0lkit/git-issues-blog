@@ -43,9 +43,9 @@ if index.exists():
 # load changed fie list from git_diff_files.txt
 try:
     with open('git_diff_files.txt', encoding='utf-8', mode = 'r') as f:
-    for line in f:
-        if line.strip() != "":
-            CHANGED.append(line.strip())
+        for line in f:
+            if line.strip() != "":
+                CHANGED.append(line.strip())
     f.close()
 except:
     print('no changed file found')
