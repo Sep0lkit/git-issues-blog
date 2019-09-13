@@ -12,12 +12,20 @@ on:
 
 jobs:
   git-issues-blog:
+
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v1
       with:
         ref: master
-    - name: Publish Git Issues Blog 
+    - name: Get git diff files
+      run: |
+        chmod +x git-issues-blog.sh
+        ./git-issues-blog.sh
+      shell:
+        bash
+    - name: Publish Issues
       uses: ./
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

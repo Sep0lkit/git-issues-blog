@@ -22,6 +22,7 @@ POST_INDEX_FILE = os.getenv('POST_INDEX_FILE', '_index')
 POSTS = []
 CHANGED = []
 
+
 # github object
 g = Github(GITHUB_TOKEN)
 repo = g.get_repo(GITHUB_REPO)
@@ -31,15 +32,24 @@ dictionary = {}
 index = pathlib.Path(POST_INDEX_FILE)
 if index.exists():
     try:
-        with open(POST_INDEX_FILE, encoding='utf-8', mode = 'r') as fp:
-            dictionary = json.load(fp)
+        with open(POST_INDEX_FILE, encoding='utf-8', mode = 'r') as f:
+            dictionary = json.load(f)
         lastcommit = dictionary['__commit__']
-        command = "/usr/bin/git diff --name-only " + lastcommit
-        changed = subprocess.check_output(command).decode()
-        CHANGED = [y for y in (x.strip() for x in changed.splitlines()) if y]
+        f.close()
     except Exception as e:
         print('%s load error: %s' % (POST_INDEX_FILE, e))
         exit(-1)
+
+# load changed fie list from git_diff_files.txt
+try:
+    with open('git_diff_files.txt', encoding='utf-8', mode = 'r') as f:
+    for line in f:
+        if line.strip() != "":
+            CHANGED.append(line.strip())
+    f.close()
+except:
+    print('no changed file found')
+    CHANGED = []
 
 print("changed file: ")
 print(CHANGED)
@@ -70,6 +80,7 @@ for p in POSTS:
     # issue content templat)e
     with open(p, encoding='utf-8', mode = 'r') as f:
         issue_body = f.read()
+        f.close()
 
         # relative link to raw.github link
         re_format = "![\\1](https://raw.githubusercontent.com/{}/{}/{}/\\2)".format(GITHUB_REPO, GITHUB_BRANCH, p.parent.as_posix())
