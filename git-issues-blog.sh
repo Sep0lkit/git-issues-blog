@@ -9,6 +9,6 @@ if [ -n "$commit" ]; then
 	git config --global core.quotepath false
     git diff --name-only $commit  > git_diff_files.txt
 else
-	echo "no commit found, changed set to null"
+	echo "no commit found, change all"
     echo '' > git_diff_files.txt
 fi
