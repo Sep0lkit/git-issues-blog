@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-''' Create Issue From File '''
+
+# Author: Sep0lkit
+# Github: https://github.com/Sep0lkit/git-issues-blo
+
 import os
 import re
 import json
@@ -51,9 +54,6 @@ except:
     print('no changed file found')
     CHANGED = []
 
-print("changed file: ")
-print(CHANGED)
-
 p = pathlib.Path(POSTS_PATH)
 for f in p.rglob('*.md'):
     if len(CHANGED) != 0:
@@ -62,6 +62,9 @@ for f in p.rglob('*.md'):
             POSTS.append(f)
     else:
         POSTS.append(f)
+
+print("posts need update: ")
+print(POSTS)
 
 header = pathlib.Path('_tpl/post-header.md')
 if header.exists():
@@ -84,9 +87,9 @@ for p in POSTS:
 
         # relative link to raw.github link
         re_format = "![\\1](https://raw.githubusercontent.com/{}/{}/{}/\\2)".format(GITHUB_REPO, GITHUB_BRANCH, p.parent.as_posix())
-        issue_body_new = re.sub(r'!\[(.*)\]\((?!http)(.*)\)', re_format, issue_body, flags = re.M)
+        issue_body_with_giturl = re.sub(r'!\[(.*)\]\((?!http)(.*)\)', re_format, issue_body, flags = re.M)
 
-    issue_content = issue_header + issue_body_new + issue_footer
+    issue_content = issue_header + issue_body_with_giturl + issue_footer
 
     # check file exist issue or not by title(POSTS_PATH)
     pstr = p.as_posix()
