@@ -38,21 +38,16 @@ if index.exists():
         with open(POST_INDEX_FILE, encoding='utf-8', mode = 'r') as f:
             dictionary = json.load(f)
         lastcommit = dictionary['__commit__']
+        command = "git diff --name-only -z " + lastcommit
+        changed = subprocess.check_output(command)
+        for x in changed.split(b'\x00'):
+            if x.decode('utf-8'):
+		CHANGED.append(x.decode('utf-8'))
         f.close()
     except Exception as e:
         print('%s load error: %s' % (POST_INDEX_FILE, e))
         exit(-1)
 
-# load changed fie list from git_diff_files.txt
-try:
-    with open('git_diff_files.txt', encoding='utf-8', mode = 'r') as f:
-        for line in f:
-            if line.strip() != "":
-                CHANGED.append(line.strip())
-    f.close()
-except:
-    print('no changed file found')
-    CHANGED = []
 
 p = pathlib.Path(POSTS_PATH)
 for f in p.rglob('*.md'):
