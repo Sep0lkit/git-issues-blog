@@ -42,7 +42,7 @@ if index.exists():
         changed = subprocess.check_output(command)
         for x in changed.split(b'\x00'):
             if x.decode('utf-8'):
-		CHANGED.append(x.decode('utf-8'))
+		      CHANGED.append(x.decode('utf-8'))
         f.close()
     except Exception as e:
         print('%s load error: %s' % (POST_INDEX_FILE, e))
