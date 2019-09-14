@@ -5,6 +5,7 @@ LABEL repository="https://github.com/Sep0lkit/git-issues-blog"
 
 # Github action labels
 LABEL com.github.actions.name="git-issues-blog"
+LABEL com.github.actions.author="Sep0lkit"
 LABEL com.github.actions.description="Auto build issues blog from github repo"
 LABEL com.github.actions.icon="file-text"
 LABEL com.github.actions.color="blue"
