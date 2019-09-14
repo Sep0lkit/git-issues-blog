@@ -15,12 +15,12 @@ I use this action for my blog system,  make me more focused on writing.
 
 ## Usage:
 
-```
-    - name: Git-Issues-Blog
-      uses: Sep0lkit/git-issues-blog@v1.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        POSTS_PATH: 'posts'
+```yaml
+- name: Git-Issues-Blog
+  uses: Sep0lkit/git-issues-blog@v1.1
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    POSTS_PATH: 'posts'
 ```
 
 #### Environment variables
