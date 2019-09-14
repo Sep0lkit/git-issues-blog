@@ -91,25 +91,29 @@ for p in POSTS:
     if pstr in dictionary: 
         # get issue info
         issue_number = dictionary[pstr]
-        issue = repo.get_issue(number=issue_number)
-        issue_url = issue.html_url
-        issue_title = issue.title
+        try:
+            issue = repo.get_issue(number=issue_number)
 
-        # content
-        payload = {}
-        payload['title'] = issue_title
-        payload['body'] = issue_content
+            issue_url = issue.html_url
+            issue_title = issue.title
 
-        # github edit issue api
-        header = {'Authorization': 'token %s' % GITHUB_TOKEN}
+            # content
+            payload = {}
+            payload['title'] = issue_title
+            payload['body'] = issue_content
 
-        url = GITHUB_API + "/repos/" + GITHUB_REPO + "/issues/" + str(issue_number)
-        r = requests.patch(url, headers=header, data=json.dumps(payload))
-        if r.status_code == 200:
-            print("issue update successful: %s" % issue_number)
-        else:
-            print("issue update failed: %s" % issue_number)
-            exit(-1)
+            # github edit issue api
+            header = {'Authorization': 'token %s' % GITHUB_TOKEN}
+
+            url = GITHUB_API + "/repos/" + GITHUB_REPO + "/issues/" + str(issue_number)
+            r = requests.patch(url, headers=header, data=json.dumps(payload))
+            if r.status_code == 200:
+                print("issue update successful: %s" % issue_number)
+            else:
+                print("issue update failed: %s" % issue_number)
+                exit(-1)
+        except GithubException as e:
+            print('get issues: %s error, skip for next' % issue_number)
 
     else:
         #creat issue
@@ -133,7 +137,7 @@ except UnknownObjectException:
     repo.create_file(POST_INDEX_FILE, "add post index: _index", "{}", branch=GITHUB_BRANCH)
 #update POST_INDEX_FILE
 post_index_file = repo.get_contents(POST_INDEX_FILE,ref=GITHUB_BRANCH)
-post_index_content = json.dumps(dictionary)
+post_index_content = json.dumps(dictionary, ensure_ascii=False)
 post_index_msg = "rebuild posts index from: " + GITHUB_ACTION_NAME
 repo.update_file(post_index_file.path, post_index_msg, post_index_content, post_index_file.sha, branch=GITHUB_BRANCH)
 
