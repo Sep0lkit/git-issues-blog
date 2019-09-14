@@ -19,12 +19,6 @@ jobs:
     - uses: actions/checkout@v1
       with:
         ref: master
-    - name: Get git diff files
-      run: |
-        chmod +x git-issues-blog.sh
-        ./git-issues-blog.sh
-      shell:
-        bash
     - name: Publish Issues
       uses: ./
       env:
