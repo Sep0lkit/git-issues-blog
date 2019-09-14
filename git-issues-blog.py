@@ -39,7 +39,7 @@ if index.exists():
             dictionary = json.load(f)
         lastcommit = dictionary['__commit__']
         command = "git diff --name-only -z " + lastcommit
-        changed = subprocess.check_output(command)
+        changed = subprocess.check_output(['git', 'diff', '--name-only', '-z', lastcommit])
         for x in changed.split(b'\x00'):
             if x.decode('utf-8'):
                 CHANGED.append(x.decode('utf-8'))
