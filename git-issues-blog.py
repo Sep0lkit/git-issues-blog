@@ -72,7 +72,7 @@ footer = pathlib.Path('_tpl/post-footer.md')
 if footer.exists():
     issue_footer = footer.read_text()
 else:
-    issue_footer = ""
+    issue_footer = "------\nPowered by [Git-Issues-Blog](https://github.com/marketplace/actions/git-issues-blog)"
 
 
 for p in POSTS:
