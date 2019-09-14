@@ -10,6 +10,7 @@ import pathlib
 import requests
 import subprocess
 from github import Github
+from github import GithubException
 from github import UnknownObjectException
 
 GITHUB_API = "https://api.github.com"

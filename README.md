@@ -28,9 +28,9 @@ I use this action for my blog system,  make me more focused on writing.
 
 #### Issues templates
 
-​	"_tpl/post-header.md" and "_tpl/post-footer.md" for templates, issues content will be:
-
-​			issues = post-header.md + posts/example.md + post-footer.md
+    "_tpl/post-header.md" and "_tpl/post-footer.md" for templates, issues content will be:
+    
+        Issues = post-header.md + posts/example.md + post-footer.md
 
 
 
