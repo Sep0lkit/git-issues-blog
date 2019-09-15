@@ -12,9 +12,7 @@ Github marketplace: https://github.com/marketplace/actions/git-issues-blog
 
 ### Update this post:
 
-This line added for update testing.
-
-
+Add for v1.2 testing.
 
 
 
