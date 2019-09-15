@@ -19,6 +19,7 @@ GITHUB_ACTION_NAME = os.environ['GITHUB_ACTION']
 # Get environment variables
 GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
 GITHUB_REPO = os.environ['GITHUB_REPOSITORY']
+GITHUB_USER = GITHUB_REPO.split('/')[0]
 GITHUB_BRANCH = os.getenv('GITHUB_BRANCH', 'master')
 POSTS_PATH = os.getenv('POSTS_PATH', 'posts')
 POST_INDEX_FILE = os.getenv('POST_INDEX_FILE', '_index')
@@ -30,8 +31,6 @@ CHANGED = []
 # github object
 g = Github(GITHUB_TOKEN)
 repo = g.get_repo(GITHUB_REPO)
-guser = g.get_user()
-
 
 # local dictionary
 dictionary = {}
@@ -97,8 +96,8 @@ for p in POSTS:
         issue_body_with_giturl = re.sub(r'!\[(.*)\]\((?!http)(.*)\)', re_format, issue_body, flags = re.M)
 
     # template variables in header and footer
-    issue_header = parse_issue_tpl(issue_header, guser, p.as_posix())
-    issue_footer = parse_issue_tpl(issue_footer, guser, p.as_posix())
+    issue_header = parse_issue_tpl(issue_header, GITHUB_USER, p.as_posix())
+    issue_footer = parse_issue_tpl(issue_footer, GITHUB_USER, p.as_posix())
     
     issue_content = issue_header + issue_body_with_giturl + issue_footer
 
