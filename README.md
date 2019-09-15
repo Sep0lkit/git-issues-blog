@@ -13,6 +13,10 @@ I use this action for my blog system,  make me more focused on writing.
 - Automatic conversion image link
 - Easy to using
 
+## Example:
+
+​	**Issues:** [Thanks-for-using.md](https://github.com/Sep0lkit/git-issues-blog/issues/6)
+
 ## Usage:
 
 ```yaml
@@ -37,6 +41,8 @@ I use this action for my blog system,  make me more focused on writing.
 > {{ GITHUB_POSTS_USER }}		  #github repository username
 >
 > {{ GITHUB_POSTS_URL }}			#posts url in file but not issues.
+
+
 
 ## Something to do:
 
