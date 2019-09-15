@@ -48,6 +48,3 @@ I use this action for my blog system,  make me more focused on writing.
 
 - [ ] Posts by github user,  but not github-action(github actions doesn't support now).
 
-## License
-
-MIT License - see the [LICENSE](LICENSE) file for details
