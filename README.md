@@ -34,9 +34,9 @@ I use this action for my blog system,  make me more focused on writing.
 
 > tpl variables support:
 >
-> {{\s?GITHUB_POSTS_USER\s?}}		  #github repository username
+> {{ GITHUB_POSTS_USER }}		  #github repository username
 >
-> {{\s?GITHUB_POSTS_URL\s?}}			#posts url in file but not issues.
+> {{ GITHUB_POSTS_URL }}			#posts url in file but not issues.
 
 ## Something to do:
 
