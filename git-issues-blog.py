@@ -30,6 +30,8 @@ CHANGED = []
 # github object
 g = Github(GITHUB_TOKEN)
 repo = g.get_repo(GITHUB_REPO)
+guser = g.get_user()
+
 
 # local dictionary
 dictionary = {}
@@ -74,6 +76,15 @@ if footer.exists():
 else:
     issue_footer = "\n\nPowered by [Git-Issues-Blog](https://github.com/marketplace/actions/git-issues-blog)"
 
+# issues tpl variables function
+def parse_issue_tpl(content, user, path):
+    #GITHUB_POSTS_USER
+    content = re.sub(r'{{\s?GITHUB_POSTS_USER\s?}}', user , content, flags=re.M)
+    #GITHUB_POSTS_URL
+    path = "https://github.com/{}/blob/{}/{}".format(GITHUB_REPO, GITHUB_BRANCH, path)
+    content = re.sub(r'{{\s?GITHUB_POSTS_URL\s?}}', path , content, flags=re.M)
+
+    return content
 
 for p in POSTS:
     # issue content templat)e
@@ -85,6 +96,10 @@ for p in POSTS:
         re_format = "![\\1](https://raw.githubusercontent.com/{}/{}/{}/\\2)".format(GITHUB_REPO, GITHUB_BRANCH, p.parent.as_posix())
         issue_body_with_giturl = re.sub(r'!\[(.*)\]\((?!http)(.*)\)', re_format, issue_body, flags = re.M)
 
+    # template variables in header and footer
+    issue_header = parse_issue_tpl(issue_header, guser, p.as_posix())
+    issue_footer = parse_issue_tpl(issue_footer, guser, p.as_posix())
+    
     issue_content = issue_header + issue_body_with_giturl + issue_footer
 
     # check file exist issue or not by title(POSTS_PATH)
