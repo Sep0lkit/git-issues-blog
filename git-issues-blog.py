@@ -133,6 +133,7 @@ for p in POSTS:
     else:
         #creat issue
         title = p.name
+        title = re.sub('.md$', '', title, flags=re.IGNORECASE)
         issue = repo.create_issue(title, issue_content)
         print("issue create successfule: %s" % issue.number)
         dictionary[pstr] = issue.number
