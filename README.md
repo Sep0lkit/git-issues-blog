@@ -10,6 +10,7 @@ I use this action for my blog system,  make me more focused on writing.
 - **WYWIWYG**(What You Write Is What You Get)
 - Based on github file content 
 - Automatically generate and update issues
+- Template support
 - Automatic conversion image link
 - Easy to using
 
