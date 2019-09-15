@@ -17,7 +17,7 @@ I use this action for my blog system,  make me more focused on writing.
 
 ```yaml
 - name: Git-Issues-Blog
-  uses: Sep0lkit/git-issues-blog@v1.1
+  uses: Sep0lkit/git-issues-blog@v1.2
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     POSTS_PATH: 'posts'
@@ -29,7 +29,14 @@ I use this action for my blog system,  make me more focused on writing.
 #### Issues templates
 
 "_tpl/post-header.md" and "_tpl/post-footer.md" for templates, issues content will be:
-    <u>**Issues = post-header.md + posts/example.md + post-footer.md**</u>
+
+​    <u>**Issues = post-header.md + posts/example.md + post-footer.md**</u>
+
+> tpl variables support:
+>
+> {{\s?GITHUB_POSTS_USER\s?}}		  #github repository username
+>
+> {{\s?GITHUB_POSTS_URL\s?}}			#posts url in file but not issues.
 
 ## Something to do:
 
