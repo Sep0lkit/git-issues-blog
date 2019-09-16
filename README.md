@@ -21,11 +21,31 @@ I use this action for my blog system,  make me more focused on writing.
 ## Usage:
 
 ```yaml
-- name: Git-Issues-Blog
-  uses: Sep0lkit/git-issues-blog@v1.2
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    POSTS_PATH: 'posts'
+name: git issues blog workflow
+
+on: 
+  push:
+    branches:
+      - master
+    paths:
+      - 'posts/*.md'
+      - 'posts/*/*.md'
+      - 'posts/*/*/*.md'
+
+
+jobs:
+  git-issues-blog:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        ref: master
+    - name: Git-Issues-Blog
+      uses: Sep0lkit/git-issues-blog@v1.3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        POSTS_PATH: 'posts'
+      
 ```
 
 #### Environment variables
