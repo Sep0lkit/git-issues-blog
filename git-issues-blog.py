@@ -96,10 +96,10 @@ for p in POSTS:
         issue_body_with_giturl = re.sub(r'!\[(.*)\]\((?!http)(.*)\)', re_format, issue_body, flags = re.M)
 
     # template variables in header and footer
-    issue_header = parse_issue_tpl(issue_header, GITHUB_USER, p.as_posix())
-    issue_footer = parse_issue_tpl(issue_footer, GITHUB_USER, p.as_posix())
+    issue_header_with_tpl = parse_issue_tpl(issue_header, GITHUB_USER, p.as_posix())
+    issue_footer_with_tpl = parse_issue_tpl(issue_footer, GITHUB_USER, p.as_posix())
     
-    issue_content = issue_header + issue_body_with_giturl + issue_footer
+    issue_content = issue_header_with_tpl + issue_body_with_giturl + issue_footer_with_tpl
 
     # check file exist issue or not by title(POSTS_PATH)
     pstr = p.as_posix()
