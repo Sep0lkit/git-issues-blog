@@ -9,6 +9,7 @@ import json
 import pathlib
 import requests
 import subprocess
+import urllib.parse
 from github import Github
 from github import GithubException
 from github import UnknownObjectException
@@ -79,9 +80,12 @@ else:
 def parse_issue_tpl(content, user, path):
     #GITHUB_POSTS_USER
     content = re.sub(r'{{\s?GITHUB_POSTS_USER\s?}}', user , content, flags=re.M)
+    #GITHUB_POSTS_FILENAME
+    postname = path.rsplit('/',1)[1]
+    content = re.sub(r'{{\s?GITHUB_POSTS_NAME\s?}}', postname , content, flags=re.M)
     #GITHUB_POSTS_URL
-    path = "https://github.com/{}/blob/{}/{}".format(GITHUB_REPO, GITHUB_BRANCH, path)
-    content = re.sub(r'{{\s?GITHUB_POSTS_URL\s?}}', path , content, flags=re.M)
+    url = "https://github.com/{}/blob/{}/{}".format(GITHUB_REPO, GITHUB_BRANCH, urllib.parse.quote(path))
+    content = re.sub(r'{{\s?GITHUB_POSTS_URL\s?}}', url , content, flags=re.M)
 
     return content
 
